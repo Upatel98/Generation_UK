@@ -1,10 +1,17 @@
 #Mini-Project
+import random
 
-drinks = ['Coca-cola', '7Up', 'Fanta']
+drinks = ['Coca-cola', '7Up', 'Fanta', 'Sprite', 'Water']
 
 def drinks_index():
   for x in drinks:
     print(f'{((drinks.index(x)) + 1)}. {x}')
+
+drinks_order = []
+
+def drinks_order_index():
+  for x in drinks_order:
+    print(f'{((drinks_order.index(x)) + 1)}. {x}')
 
 ordr_dir = []
 
@@ -17,7 +24,7 @@ while True:
   print('\nWelcome\nEnter 0 to Exit App\nEnter 1 for Product Menu\nEnter 2 for Orders Menu')
   enter = int(input('Enter: '))
 
-  while enter < 0 or enter > 2:
+  while enter != 0 and enter != 1 and enter != 2:
       print('\nPlease Enter 0/1/2')
       enter = int(input('Enter: '))
 
@@ -44,6 +51,10 @@ while True:
           print('Choose a Drink from the List:')
           cstmr_drink = str(input())
         print(f'\n{cstmr_drink}')
+        drinks_order.append({'Order Number': random.randint(0,101), 'Order': [cstmr_drink]})
+        print(drinks_order)
+
+        '''
         print('\nWould you like Ice \nEnter yes/no:')
         option_input = str(input())
         while option_input != 'yes' and option_input != 'no':
@@ -52,15 +63,27 @@ while True:
         if option_input == 'yes':
           print(f'\nServing {cstmr_drink} with Ice')
         else:
-          print(f'\nServing {cstmr_drink} without Ice')
-        
+          print(f'\nServing {cstmr_drink} without Ice')'''
       elif user_input == 2:
-        add_item = input('\nAdd Item:\n')
-        drinks.append(str(add_item))
-        print('\nNew Drink List:')
-        drinks_index()
+        print('\nAdd Item to an Order:')
+        drinks_order_index()
+        user_input = int(input('Order Index: '))
+        while user_input < 0 or user_input > len(drinks_order):
+          print('\nChoose a Item from the List')
+          user_input = int(input('Order Index: '))
+        drinks_order_index()
+        drinks_change = str(input('Enter: '))
+        while drinks_change not in drinks:
+          print('\nChoose a Item from the List')
+          drinks_change = str(input('Enter: '))
+        cstmr_drink = str(input('Enter: '))
+        drinks_order[(user_input - 1)]['Order'].append(cstmr_drink)
+        
   
       elif user_input == 3:
+        
+        
+        '''
         print('\nChoose a List Item to Changed')
         drinks_index()
         print('\nItem to Change:')
@@ -71,20 +94,18 @@ while True:
           drinks_change = str(input())
         drinks_add = str(input('\nItem to Add: '))
         drinks[(drinks.index(drinks_change))] = drinks_add
-        drinks_index()
+        drinks_index()'''
   
       elif user_input == 4:
-        print('\nDrinks List')
-        drinks_index()
-        print('\nDelete an Item')
-        del_input = input('Delete: ')
-        while del_input not in drinks:
-          print('\nChhose an Item in the List')
-          del_input = input('Delete: ')
-        if del_input in drinks:
-          drinks.remove(del_input)
-          print(f'\n{del_input} has been deleted\n')  
-          drinks_index()
+        print('\nDelete an Order')
+        drinks_order_index()
+        del_input = int(input('Delete: '))
+        while del_input < 0 or del_input > len(drinks_order):
+          print('\nChoose a Item from the List')
+          del_input = int(input('Order Index: '))
+        del drinks_order[(del_input - 1)]
+        print('Order Has Been Deleted')  
+        drinks_order_index()
     
   else:
     while True: 
