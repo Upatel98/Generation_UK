@@ -1,180 +1,87 @@
 #Mini-Project
-import random
 
-drinks = ['Coca-cola', '7Up', 'Fanta', 'Sprite', 'Water']
+from mp_ecosystem import lst_index, enter_loop, new_ordr, add_item, dlt_order, new_custmr_info, edit_ordr_status, update_info, dlt_custmr_info, add_courier, updt_courier, dlt_courier
+from random import randint
 
-def drinks_index():
-  for x in drinks:
-    print(f'{((drinks.index(x)) + 1)}. {x}')
+menu = [{'Name': 'Coca-cola', 'Price': 2.50}, {'Name': '7Up', 'Price': 2.50}, {'Name': 'Fanta', 'Price': 2.50}, {'Name': 'Water', 'Price': 2.50}]
 
-drinks_order = []
+courier = ['John', 'Smith', 'David', 'Manny', 'Floyd', 'Daniel']
 
-def drinks_order_index():
-  for x in drinks_order:
-    print(f'{((drinks_order.index(x)) + 1)}. {x}')
+orders = []
 
-ordr_dir = []
-
-def ordr_index():
-  for x in ordr_dir:
-    print(f'{((ordr_dir.index(x)) + 1)}. {x}')
+custmr_dir =[]
 
 while True:
-
-  print('\nWelcome\nEnter 0 to Exit App\nEnter 1 for Product Menu\nEnter 2 for Orders Menu')
-  enter = int(input('Enter: '))
-
-  while enter != 0 and enter != 1 and enter != 2:
-      print('\nPlease Enter 0/1/2')
-      enter = int(input('Enter: '))
-
-  if enter == 0:
+  print('\nWelcome\n[Index 0] ==> Exit App\n[Index 1] ==> Product\'s Menu\n[Index 2] ==> Orders Menu\n[Index 3] ==> Courier\'s Menu')
+  enter = input('Enter a Index: ')
+  enter_loop(enter, 4)
+  
+  if int(enter) == 0:
     print('\nExit, Thank You')
     break
-  elif enter == 1:
+
+  elif int(enter) == 1: 
     while True: 
-      print('\nProduct Menu - Choose an Option:\n0. Return to Main Menu\n1. Product List\n2. Create New Product\n3. Update Product\n4. Delete a Product')
-      user_input = int(input('Enter: '))
+      print('\nProduct Menu \n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Product Menu\n[Index 2] ==> Add New Item\n[Index 3] ==> Update Order\n[Index 4] ==> Delete an Order')
+      enter = input('\nEnter Index: ')
+      enter_loop(enter, 6)
+
+      if int(enter) == 0:
+        break
+
+      elif int(enter) == 1:
+        new_ordr(menu, orders, enter)
       
-      while user_input < 0 or user_input > 4:
-        print('Enter Number from the List')
-        user_input = int(input())
-  
-      if user_input == 0:
+      elif int(enter) == 2:
+        add_item(menu, orders)
+      
+      elif int(enter) == 3:
         break
-  
-      elif user_input == 1:
-        print('\nDrinks List:')
-        drinks_index()
-        cstmr_drink = input('\nChoose your Drink:\n')
-        while str(cstmr_drink) not in drinks:
-          print('Choose a Drink from the List:')
-          cstmr_drink = str(input())
-        print(f'\n{cstmr_drink}')
-        drinks_order.append({'Order Number': random.randint(0,101), 'Order': [cstmr_drink]})
-        print(drinks_order)
 
-        '''
-        print('\nWould you like Ice \nEnter yes/no:')
-        option_input = str(input())
-        while option_input != 'yes' and option_input != 'no':
-          print('\nEnter yes/no')
-          option_input = str(input())
-        if option_input == 'yes':
-          print(f'\nServing {cstmr_drink} with Ice')
-        else:
-          print(f'\nServing {cstmr_drink} without Ice')'''
-      elif user_input == 2:
-        print('\nAdd Item to an Order:')
-        drinks_order_index()
-        user_input = int(input('Order Index: '))
-        while user_input < 0 or user_input > len(drinks_order):
-          print('\nChoose a Item from the List')
-          user_input = int(input('Order Index: '))
-        drinks_order_index()
-        drinks_change = str(input('Enter: '))
-        while drinks_change not in drinks:
-          print('\nChoose a Item from the List')
-          drinks_change = str(input('Enter: '))
-        cstmr_drink = str(input('Enter: '))
-        drinks_order[(user_input - 1)]['Order'].append(cstmr_drink)
-        
-  
-      elif user_input == 3:
-        
-        
-        '''
-        print('\nChoose a List Item to Changed')
-        drinks_index()
-        print('\nItem to Change:')
-        drinks_change = str(input())
-        while drinks_change not in drinks:
-          print('\nChoose a Item from the List')
-          print('\nItem to Change:')
-          drinks_change = str(input())
-        drinks_add = str(input('\nItem to Add: '))
-        drinks[(drinks.index(drinks_change))] = drinks_add
-        drinks_index()'''
-  
-      elif user_input == 4:
-        print('\nDelete an Order')
-        drinks_order_index()
-        del_input = int(input('Delete: '))
-        while del_input < 0 or del_input > len(drinks_order):
-          print('\nChoose a Item from the List')
-          del_input = int(input('Order Index: '))
-        del drinks_order[(del_input - 1)]
-        print('Order Has Been Deleted')  
-        drinks_order_index()
-    
-  else:
+      elif int(enter) == 4:
+        dlt_order(orders, enter)
+
+  elif int(enter) == 2:
     while True: 
-      print('\nOrders Menu - Choose an Option:\n0. Return to Main Menu\n1. Orders Dictionary\n2. Customer Information\n3. Update Order Status\n4. Update Customer Info\n5. Delete Order')
-      user_input = int(input('Enter: '))
-              
-      while  user_input < 0 or user_input > 5:
-        print('Enter Number from the List')
-        user_input = int(input())
+      print('\nOrders Menu:\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Orders Dictionary\n[Index 2] ==> Add Customer Information\n[Index 3] ==> Update Order Status\n[Index 4] ==> Update Customer Info\n[Index 5] ==> Delete Customer Information')
+      enter = input('Enter Index: ')
+      enter_loop(enter, 6)
 
-      if user_input == 0:
+      if int(enter) == 0:
         break
 
-      elif user_input == 1:
-        ordr_index()
+      elif int(enter) == 1:
+        lst_index(custmr_dir)
 
-      elif user_input == 2:
-        cstmr_info = {
-          "customer_name": input('Name: '),
-          "customer_address": input('Address: '),
-          "customer_phone": input('Phone Number: '),
-          "status": "preparing"}
-        ordr_dir.append(cstmr_info)
+      elif int(enter) == 2:
+        new_custmr_info(custmr_dir)
+      
+      elif int(enter) == 3:
+        edit_ordr_status(enter, custmr_dir)
+      
+      elif int(enter) == 4:
+        update_info(custmr_dir)
+      
+      elif int(enter) == 5:
+        dlt_custmr_info(custmr_dir)
+  
+  elif int(enter) == 3: 
+    while True: 
+      print('\nCourier\'s Menu \n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Courier\'s List\n[Index 2] ==> Courier\'s List\n[Index 3] ==> Update Courier List \n[Index 4] ==> Delete Courier')
+      enter = input('\nEnter Index: ')
+      enter_loop(enter, 5)
+    
+      if int(enter) == 0:
+        break
 
-      elif user_input == 3:
-        print('\nChoose Order to Edit:')
-        ordr_index()
-        edt_ordr = int(input('Enter: '))
-        while edt_ordr < 1 or edt_ordr > len(ordr_dir):
-          print('Enter a Number from the Index')
-          edt_ordr = int(input('Enter: '))
-        print('\nChange Order Status:\n1. Preparing\n2. Awaiting Pickup\n3. Out-for-Delivery\n4. Delivered')
-        ordr_status = int(input('Enter: '))
-        while ordr_status < 1 and ordr_status > 4:
-          print('Enter a Number from the Index')
-          ordr_status = int(input('Enter: '))
-        if ordr_status == 1:
-          (ordr_dir[(edt_ordr - 1)]).update({"status": 'Preparing'})
-        elif ordr_status == 2:
-          (ordr_dir[(edt_ordr - 1)]).update({"status": 'Awaiting Pickup'})
-        elif ordr_status == 3:
-          (ordr_dir[(edt_ordr - 1)]).update({"status": 'Out-for-Delivery'})
-        elif ordr_status == 3:
-          (ordr_dir[(edt_ordr - 1)]).update({"status": 'Delivered'})
+      elif int(enter) == 1:
+        lst_index(courier)
 
-      elif user_input == 4:
-        print('\nChoose Customer Info to Edit:')
-        ordr_index()
-        edt_info = int(input('Enter: '))
-        while edt_info < 1 or edt_ordr > len(ordr_dir):
-          print('Enter a Number from the Index')
-          edt_info = int(input('Enter: '))        
-        
-        def create_dictionary(**kwargs):
-          this_dict = {}
-          for key, value in kwargs.items():
-            this_dict[key] = value
-          return this_dict
+      elif int(enter) == 2:
+        add_courier(courier)
 
-        chng_ordr = create_dictionary(customer_name = input('Name: '), customer_address = input('Address: '), customer_phone = input('Phone: '), status = (ordr_dir[(edt_info - 1)]).get("status"))
-        ordr_dir[(edt_info - 1)] = chng_ordr
-        
-      elif user_input == 5:
-        ordr_index()
-        print('\nDelete an Order')
-        dlt_ordr = int(input('Enter: '))
-        while dlt_ordr < 1 and dlt_ordr > len(ordr_dir):
-          print('Enter a Number from the Index')
-          dlt_ordr = int(input('Enter: '))
-        ordr_dir.pop((dlt_ordr - 1))
-        print('\n')
-        ordr_index()
+      elif int(enter) == 3:
+        updt_courier(courier)
+
+      elif int(enter) == 4:
+        dlt_courier(courier)
