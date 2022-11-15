@@ -1,6 +1,6 @@
 #Mini-Project
 import csv
-from mp_files.mp_ecosystem import lst_index, enter_loop, new_ordr, add_item, dlt_order, new_custmr_info, edit_ordr_status, update_info, dlt_custmr_info, add_courier, updt_courier, dlt_courier
+from mp_ecosystem import lst_index, enter_loop, new_ordr, add_item, dlt_order, new_custmr_info, edit_ordr_status, update_info, dlt_custmr_info, add_courier, updt_courier, dlt_courier
 
 menu = [{'Name': 'Coca-cola', 'Price': 2.50}, {'Name': '7Up', 'Price': 2.50}, {'Name': 'Fanta', 'Price': 2.50}, {'Name': 'Water', 'Price': 2.50}]
 
@@ -19,14 +19,14 @@ while True:
   
   if int(enter) == 0:
   
-    with open('mini_project_ecosystem/products.csv', 'w', newline='') as file:    
+    with open('products.csv', 'w', newline='') as file:    
       writer = csv.DictWriter(file, fieldnames = (menu[0].keys()))    
       writer.writeheader()
       for x in menu:
         writer.writerow(x)
       print('Product Information Added to CSV.File')
     
-    with open('mini_project_ecosystem/orders.csv', 'w', newline='') as file:    
+    with open('orders.csv', 'w', newline='') as file:    
       if orders:
         writer = csv.DictWriter(file, fieldnames = (orders[0].keys()))    
         writer.writeheader()
@@ -35,7 +35,7 @@ while True:
       else:
         print('No Orders Information')
   
-    with open('mini_project_ecosystem/courier.csv', 'w', newline='') as file:    
+    with open('courier.csv', 'w', newline='') as file:    
       writer = csv.DictWriter(file, fieldnames = (courier[0].keys())) 
       writer.writeheader()
       for x in courier:
