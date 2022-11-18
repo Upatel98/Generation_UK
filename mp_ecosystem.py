@@ -9,17 +9,26 @@ def read_products_csv(list):
       for x in reader:
         list.append(x)
 
+    file.close()
+    print('\nProducts CSV File Uploaded')
+
 def read_couriers_csv(list):
     with open('couriers.csv', 'r', newline='') as file:    
       reader = csv.DictReader(file)    
       for x in reader:
         list.append(x)
 
+    file.close()
+    print('Couriers CSV File Uploaded')
+
 def read_orders_csv(list):
     with open('orders.csv', 'r', newline='') as file:    
       reader = csv.DictReader(file)    
       for x in reader:
         list.append(x)
+
+    file.close()
+    print('Orders CSV File Uploaded')
 
 #Writing CSV Files
 def write_products_csv(list):
@@ -29,6 +38,9 @@ def write_products_csv(list):
         for x in list:
             writer.writerow(x)
 
+    file.close()
+    print('\nProducts CSV File Updated')
+
 def write_couriers_csv(list):
     with open('couriers.csv', 'w', newline='') as file:    
         writer = csv.DictWriter(file, fieldnames=(['Name','Phone Number']))    
@@ -36,15 +48,22 @@ def write_couriers_csv(list):
         for x in list:
             writer.writerow(x)
 
+    file.close()
+    print('Couriers CSV File Updated')
+
 def write_orders_csv(list):
     with open('orders.csv', 'w', newline='') as file:    
         if list:
-            writer = csv.DictWriter(file)    
+            writer = csv.DictWriter(file, fieldnames=(list[0].keys()))    
             writer.writeheader()
             for x in list:
                 writer.writerow(x)
+            print('Orders CSV File Updated')
+            
         else:
-            print('No Orders Information')
+            print('No Orders Information to Upload')
+
+    file.close()
 
 #Create an Index
 def lst_indx(list):
@@ -78,14 +97,16 @@ def blnk():
 
 #New Products Menu
 def add_product(list):
+    print('\n---Add New Item---')
     ths_dict = {
         'Name': input('Enter Name: '), 
         'Price': float(input('Enter Price: '))
     }
     list.append(ths_dict)
+    lst_indx(list)
 
 def updte_product(list):
-    print('Menu:')
+    print('\n---Update Item---')
     lst_indx(list)
     entr = input('Enter Item Index to Update: ')
     entr = inpt(entr, len(list))
@@ -98,14 +119,17 @@ def updte_product(list):
     lst_indx(list)
 
 def dlt_product(list):
-    print('Menu:')
+    print('\n---Delete Item---')
     lst_indx(list)
     entr = input('Enter Item Index to Update: ')
     entr = inpt(entr, len(list))
     list.pop(entr)
 
+    lst_indx(list)
+
 #New Courier Menu
 def add_courier(list):
+    print('\n---Add New Courier---')
     ths_dict = {
         'Name': input('Enter Courier Name: '),
         'Phone': int(input('Enter Courier Phone: '))
@@ -115,6 +139,7 @@ def add_courier(list):
     lst_indx(list)
 
 def updt_courier(list):
+    print('\n---Update Courier---')
     lst_indx(list)
     entr = input('Enter Courier Index to Update: ')
     entr = inpt(entr, len(list))
@@ -127,15 +152,17 @@ def updt_courier(list):
     lst_indx(list)
 
 def dlt_courier(list):
+    print('\n---Delte Courier---')
     lst_indx(list)
     entr = input('Enter Courier Index to Delete: ')
     entr = inpt(entr, len(list))
     del list[int(entr)]
+
     lst_indx(list)
 
 #New Order Directory
 def new_order(list1, list2):
-    print('Customer Information:')
+    print('\n---New Order Information---')
     ths_dict = {
         "customer_name": input('Name: '),
         "customer_address": {
@@ -154,6 +181,7 @@ def new_order(list1, list2):
 
 def updt_order_status(list):
     if list:
+        print('\n---Update Order Status---')
         lst_indx(list)
         entr = input('Choose Order Information Index: ')
         entr = inpt(entr, len(list))  
@@ -174,6 +202,7 @@ def updt_order_status(list):
 
 def updt_order(list):
     if list:
+        print('\n---Update Order Information---')
         lst_indx(list)
         entr = input('Enter Order Index to Update: ')
         entr = inpt(entr, len(list))
@@ -191,6 +220,7 @@ def updt_order(list):
 
 def dlt_order(list):
     if list:
+        print('\n---Delte Order---')
         lst_indx(list)
         entr = input('Enter Order Index to Delete: ')
         entr = inpt(entr, len(list))

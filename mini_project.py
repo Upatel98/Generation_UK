@@ -1,6 +1,11 @@
 #Mini-Project
 
-from mp_ecosystem import read_products_csv, read_couriers_csv, read_orders_csv, write_products_csv, write_couriers_csv, write_orders_csv, inpt, lst_indx, add_product, updte_product, dlt_product, add_courier, updt_courier, dlt_courier, new_order, updt_order_status, updt_order, dlt_order
+from mp_ecosystem import read_products_csv, read_couriers_csv, read_orders_csv
+from mp_ecosystem import write_products_csv, write_couriers_csv, write_orders_csv
+from mp_ecosystem import inpt, lst_indx
+from mp_ecosystem import add_product, updte_product, dlt_product 
+from mp_ecosystem import add_courier, updt_courier, dlt_courier
+from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
 
 products = []
 read_products_csv(products)
@@ -11,8 +16,6 @@ read_couriers_csv(couriers)
 orders = []
 read_orders_csv(orders)
 
-print('Products CSV File Uploaded\nCouriers CSV File Uploaded\nOrders CSV File Uploaded')
-
 while True:
   print('\n---Welcome---\n[Index 0] ==> Exit App\n[Index 1] ==> Products Menu\n[Index 2] ==> Couriers Menu\n[Index 3] ==> Orders Menu')
 
@@ -22,11 +25,8 @@ while True:
   if entr == 0:
 
     write_products_csv(products)
-    print('Products CSV File Updated')
     write_couriers_csv(couriers)
-    print('Couriers CSV File Updated')
     write_orders_csv(orders)
-    print('Orders CSV File Updated')
     print('\nExit, Thank You')
 
     break
@@ -41,6 +41,7 @@ while True:
         break
 
       elif entr == 1:
+        print('\n---Product List---')
         lst_indx(products)
 
       elif entr == 2:
@@ -62,6 +63,7 @@ while True:
         break
 
       elif entr == 1:
+        print('\n---Courier List---')
         lst_indx(couriers)
 
       elif entr == 2:
@@ -83,7 +85,7 @@ while True:
         break
 
       elif entr == 1:
-        lst_indx(orders) if orders else print('No Orders')
+        (print('\nOrders'), lst_indx(orders)) if orders else print('\nNo Orders')
 
       elif entr == 2:
         new_order(orders, couriers)
