@@ -1,113 +1,100 @@
 #Mini-Project
-import csv
-from mp_ecosystem import lst_index, enter_loop, new_ordr, add_item, dlt_order, new_custmr_info, edit_ordr_status, update_info, dlt_custmr_info, add_courier, updt_courier, dlt_courier
 
-menu = [{'Name': 'Coca-cola', 'Price': 2.50}, {'Name': '7Up', 'Price': 2.50}, {'Name': 'Fanta', 'Price': 2.50}, {'Name': 'Water', 'Price': 2.50}]
+from mp_ecosystem import read_products_csv, read_couriers_csv, read_orders_csv
+from mp_ecosystem import write_products_csv, write_couriers_csv, write_orders_csv
+from mp_ecosystem import inpt, lst_indx
+from mp_ecosystem import add_product, updte_product, dlt_product 
+from mp_ecosystem import add_courier, updt_courier, dlt_courier
+from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
 
-courier = [{'Name': 'UberEats', 'Phone': '07987654321'}, {'Name': 'Deliveroo', 'Phone': '07123456789'},{'Name': 'JustEat', 'Phone': '07987123456'}, {'Name': 'FoodHub', 'Phone': '07987123456'}]
+products = []
+read_products_csv(products)
+
+couriers = []
+read_couriers_csv(couriers)
 
 orders = []
-
-order_nums = []
-
-custmr_dir =[]
+read_orders_csv(orders)
 
 while True:
-  print('Welcome\n[Index 0] ==> Exit App\n[Index 1] ==> Product\'s Menu\n[Index 2] ==> Courier\'s Menu\n[Index 3] ==> Orders Menu')
-  enter = input('Enter a Index: ')
-  enter_loop(enter, 4)
-  
-  if int(enter) == 0:
-  
-    with open('products.csv', 'w', newline='') as file:    
-      writer = csv.DictWriter(file, fieldnames = (menu[0].keys()))    
-      writer.writeheader()
-      for x in menu:
-        writer.writerow(x)
-      print('Product Information Added to CSV.File')
-    
-    with open('orders.csv', 'w', newline='') as file:    
-      if orders:
-        writer = csv.DictWriter(file, fieldnames = (orders[0].keys()))    
-        writer.writeheader()
-        for x in orders:
-          writer.writerow(x)
-      else:
-        print('No Orders Information')
-  
-    with open('courier.csv', 'w', newline='') as file:    
-      writer = csv.DictWriter(file, fieldnames = (courier[0].keys())) 
-      writer.writeheader()
-      for x in courier:
-        writer.writerow(x)
-      print('Courier Information Added to CSV.File')
+  print('\n---Welcome---\n[Index 0] ==> Exit App\n[Index 1] ==> Products Menu\n[Index 2] ==> Couriers Menu\n[Index 3] ==> Orders Menu')
 
+  entr = input('Enter Index: ')
+  entr = inpt(entr, 4)
+    
+  if entr == 0:
+
+    write_products_csv(products)
+    write_couriers_csv(couriers)
+    write_orders_csv(orders)
     print('\nExit, Thank You')
+
     break
 
-  elif int(enter) == 1: 
+  elif entr == 1: 
     while True: 
-      print('\nProduct Menu \n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Product Menu\n[Index 2] ==> Add New Item\n[Index 3] ==> Update Order\n[Index 4] ==> Delete an Order')
-      if orders: print(f'\nCurrent Orders'), lst_index(orders)
-      enter = input('Enter Index: ')
-      enter_loop(enter, 6)
+      print('\n---Product Menu---\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Products Menu\n[Index 2] ==> Add New Item\n[Index 3] ==> Update Item\n[Index 4] ==> Delete an Item')
+      entr = input('Enter Index: ')
+      entr = inpt(entr, 6)
 
-      if int(enter) == 0:
+      if entr == 0:
         break
 
-      elif int(enter) == 1:
-        new_ordr(menu, orders, order_nums)
+      elif entr == 1:
+        print('\n---Product List---')
+        lst_indx(products)
 
-      elif int(enter) == 2:
-        add_item(menu, orders)
+      elif entr == 2:
+        add_product(products)
       
-      elif int(enter) == 3:
-        break
+      elif entr == 3:
+        updte_product(products)
 
-      elif int(enter) == 4:
-        dlt_order(orders)
+      elif entr == 4:
+        dlt_product(products)
 
-  elif int(enter) == 2: 
+  elif entr == 2: 
     while True: 
-      print('\nCourier\'s Menu \n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Courier\'s List\n[Index 2] ==> Add Courier\n[Index 3] ==> Update Courier List \n[Index 4] ==> Delete Courier')
-      enter = input('Enter Index: ')
-      enter_loop(enter, 5)
+      print('\n---Courier Menu---\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Couriers\n[Index 2] ==> Add Courier\n[Index 3] ==> Update Courier\n[Index 4] ==> Delete Courier')
+      entr = input('Enter Index: ')
+      entr = inpt(entr, 5)
     
-      if int(enter) == 0:
+      if entr == 0:
         break
 
-      elif int(enter) == 1:
-        lst_index(courier)
+      elif entr == 1:
+        print('\n---Courier List---')
+        lst_indx(couriers)
 
-      elif int(enter) == 2:
-        add_courier(courier)
+      elif entr == 2:
+        add_courier(couriers)
 
-      elif int(enter) == 3:
-        updt_courier(courier)
+      elif entr == 3:
+        updt_courier(couriers)
 
-      elif int(enter) == 4:
-        dlt_courier(courier) 
+      elif entr == 4:
+        dlt_courier(couriers) 
 
-  elif int(enter) == 3:
+  elif entr == 3:
     while True: 
-      print('\nOrders Menu:\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Orders Dictionary\n[Index 2] ==> Add Customer Information\n[Index 3] ==> Update Order Status\n[Index 4] ==> Update Customer Info\n[Index 5] ==> Delete Customer Information')
-      enter = input('Enter Index: ')
-      enter_loop(enter, 6)
+      print('\n---Orders Menu---\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Orders Directory\n[Index 2] ==> Add Customer Information\n[Index 3] ==> Update Order Status\n[Index 4] ==> Update Customer Info\n[Index 5] ==> Delete Customer Information')
+      entr = input('Enter Index: ')
+      entr = int(inpt(entr, 6))
 
-      if int(enter) == 0:
+      if entr == 0:
         break
 
-      elif int(enter) == 1:
-        lst_index(custmr_dir)
+      elif entr == 1:
+        (print('\nOrders'), lst_indx(orders)) if orders else print('\nNo Orders')
 
-      elif int(enter) == 2:
-        new_custmr_info(custmr_dir, order_nums, courier)
+      elif entr == 2:
+        new_order(orders, couriers)
       
-      elif int(enter) == 3:
-        edit_ordr_status(enter, custmr_dir)
+      elif entr == 3:
+        updt_order_status(orders)
       
-      elif int(enter) == 4:
-        update_info(custmr_dir)
+      elif entr == 4:
+        updt_order(orders)
       
-      elif int(enter) == 5:
-        dlt_custmr_info(custmr_dir)
+      elif entr == 5:
+        dlt_order(orders)
