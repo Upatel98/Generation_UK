@@ -1,17 +1,11 @@
 #Mini-Project
 
-from mp_ecosystem import read_products_csv, read_couriers_csv, read_orders_csv
-from mp_ecosystem import write_products_csv, write_couriers_csv, write_orders_csv
+from mp_ecosystem import read_orders_csv
+from mp_ecosystem import write_orders_csv, close_database
 from mp_ecosystem import inpt, lst_indx
-from mp_ecosystem import add_product, updte_product, dlt_product 
-from mp_ecosystem import add_courier, updt_courier, dlt_courier
+from mp_ecosystem import print_products_database, add_product, updt_product, dlt_product
+from mp_ecosystem import print_couriers_database, add_courier, updt_courier, dlt_courier
 from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
-
-products = []
-read_products_csv(products)
-
-couriers = []
-read_couriers_csv(couriers)
 
 orders = []
 read_orders_csv(orders)
@@ -24,11 +18,9 @@ while True:
     
   if entr == 0:
 
-    write_products_csv(products)
-    write_couriers_csv(couriers)
+    close_database()
     write_orders_csv(orders)
-    print('\nExit, Thank You')
-
+    print('Exit, Thank You')
     break
 
   elif entr == 1: 
@@ -42,16 +34,16 @@ while True:
 
       elif entr == 1:
         print('\n---Product List---')
-        lst_indx(products)
+        print_products_database()
 
       elif entr == 2:
-        add_product(products)
+        add_product()
       
       elif entr == 3:
-        updte_product(products)
+        updt_product()
 
       elif entr == 4:
-        dlt_product(products)
+        dlt_product()
 
   elif entr == 2: 
     while True: 
@@ -64,16 +56,16 @@ while True:
 
       elif entr == 1:
         print('\n---Courier List---')
-        lst_indx(couriers)
+        print_couriers_database()
 
       elif entr == 2:
-        add_courier(couriers)
+        add_courier()
 
       elif entr == 3:
-        updt_courier(couriers)
+        updt_courier()
 
       elif entr == 4:
-        dlt_courier(couriers) 
+        dlt_courier() 
 
   elif entr == 3:
     while True: 
@@ -88,7 +80,7 @@ while True:
         (print('\nOrders'), lst_indx(orders)) if orders else print('\nNo Orders')
 
       elif entr == 2:
-        new_order(orders, couriers)
+        new_order(orders)
       
       elif entr == 3:
         updt_order_status(orders)

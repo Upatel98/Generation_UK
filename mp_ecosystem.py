@@ -1,26 +1,9 @@
 import csv
 from random import randint
+import mysql_database.mini_project_database as database
+
 
 #Reading CSV Files
-
-def read_products_csv(list):
-    with open('products.csv', 'r', newline='') as file:    
-      reader = csv.DictReader(file)    
-      for x in reader:
-        list.append(x)
-
-    file.close()
-    print('\nProducts CSV File Uploaded')
-
-def read_couriers_csv(list):
-    with open('couriers.csv', 'r', newline='') as file:    
-      reader = csv.DictReader(file)    
-      for x in reader:
-        list.append(x)
-
-    file.close()
-    print('Couriers CSV File Uploaded')
-
 def read_orders_csv(list):
     with open('orders.csv', 'r', newline='') as file:    
       reader = csv.DictReader(file)    
@@ -31,26 +14,6 @@ def read_orders_csv(list):
     print('Orders CSV File Uploaded')
 
 #Writing CSV Files
-def write_products_csv(list):
-    with open('products.csv', 'w', newline='') as file:    
-        writer = csv.DictWriter(file, fieldnames=(['Name', 'Price']))    
-        writer.writeheader()
-        for x in list:
-            writer.writerow(x)
-
-    file.close()
-    print('\nProducts CSV File Updated')
-
-def write_couriers_csv(list):
-    with open('couriers.csv', 'w', newline='') as file:    
-        writer = csv.DictWriter(file, fieldnames=(['Name','Phone Number']))    
-        writer.writeheader()
-        for x in list:
-            writer.writerow(x)
-
-    file.close()
-    print('Couriers CSV File Updated')
-
 def write_orders_csv(list):
     with open('orders.csv', 'w', newline='') as file:    
         if list:
@@ -64,6 +27,14 @@ def write_orders_csv(list):
             print('No Orders Information to Upload')
 
     file.close()
+
+#Closing Database
+def close_database():
+    cursor = database.connection.cursor()
+    cursor.close()
+    database.connection.close()
+    print('\nProducts Database Uploaded')
+    print('Couriers Database Uploaded')
 
 #Create an Index
 def lst_indx(list):
@@ -86,94 +57,144 @@ def inpt(entr, x):
             break
     return int(entr) 
 
-#Blank Loop
-def blnk():
-    try:
-        New_Name = input('Enter New Name: ')
-        Price = input('Enter New Price: ')
-    except ValueError:
-        print('Minimum One Input was Empty')
-    return 
+def sql_inpt(entr, table):
+    cursor = database.connection.cursor()
+    cursor.execute(f'SELECT COUNT(id) FROM {table}')
+    x = cursor.fetchall()[0][0]
+    while True:
+        try:
+            if int(entr) not in list(range(1, (x+1))):
+                print('Invalid Index')
+                entr = input('Enter Index: ')
+                continue
+        except ValueError:
+            print('Invalid Index')
+            entr = input('Enter Index: ')
+            continue
+        else:
+            break
+
+    return int(entr)
+
 
 #New Products Menu
-def add_product(list):
+def print_products_database():
+   
+    cursor = database.connection.cursor()
+    cursor.execute('SELECT id, name, price FROM products')
+   
+    rows = cursor.fetchall()
+    for row in rows:
+        print(f'[Index {row[0]}] ==> [Name: {row[1]} , Price: {row[2]}]')
+
+def add_product():
     print('\n---Add New Item---')
-    ths_dict = {
-        'Name': input('Enter Name: '), 
-        'Price': float(input('Enter Price: '))
-    }
-    list.append(ths_dict)
-    lst_indx(list)
+    name =  input('Enter Name: ')
+    price = input('Enter Price: ')
+   
+    cursor = database.connection.cursor()
+    cursor.execute(f"INSERT INTO products (name, price) VALUES ('{name}', '{price}')")
+    database.connection.commit()
 
-def updte_product(list):
+    print('')
+    print_products_database()
+
+def updt_product():
     print('\n---Update Item---')
-    lst_indx(list)
-    entr = input('Enter Item Index to Update: ')
-    entr = inpt(entr, len(list))
+    print_products_database()
     
-    ths_dict = {
-        'Name': input('Enter New Name: '),
-        'Price': float(input('Enter New Price: '))
-    }
-    list[entr] = ths_dict
-    lst_indx(list)
-
-def dlt_product(list):
-    print('\n---Delete Item---')
-    lst_indx(list)
     entr = input('Enter Item Index to Update: ')
-    entr = inpt(entr, len(list))
-    list.pop(entr)
+    entr = sql_inpt(entr, 'products')
+    name = input('\nEnter New Name: ')
+    price = input('Enter New Price: ')
 
-    lst_indx(list)
+    if name == '' or price == '':
+        print('One\Two Inputs Empty')
+    else:
+        cursor = database.connection.cursor()
+        cursor.execute(f"UPDATE products SET name='{name}', price='{price}' WHERE id='{entr}'")
+        database.connection.commit()
+
+    print('')
+    print_products_database()
+
+def dlt_product():
+    print('\n---Delete Item---')
+    print_products_database()
+
+    entr = input('\nEnter Item Index to Delete: ')
+    entr = sql_inpt(entr, 'products')
+    cursor = database.connection.cursor()
+    cursor.execute(f"DELETE FROM products WHERE id = '{int(entr)}'")
+    database.connection.commit()
+
+    print('')
+    print_products_database()
 
 #New Courier Menu
-def add_courier(list):
+def print_couriers_database():
+    
+    cursor = database.connection.cursor()
+    cursor.execute('SELECT id, name, number FROM couriers')
+    
+    rows = cursor.fetchall()
+    for row in rows:
+        print(f'[Index{str(row[0])}] ==> [Name: {row[1]} , Number: {row[2]}]')
+
+def add_courier():
     print('\n---Add New Courier---')
-    ths_dict = {
-        'Name': input('Enter Courier Name: '),
-        'Phone': int(input('Enter Courier Phone: '))
-        }
+    
+    name = input('Enter Courier Name: ')
+    number = input('Enter Courier Number: ')
 
-    list.append(ths_dict)
-    lst_indx(list)
+    cursor = database.connection.cursor()
+    cursor.execute(f"INSERT INTO couriers (name, number) VALUES ('{name}', '{number}')")
+    database.connection.commit()
 
-def updt_courier(list):
+    print('')
+    print_couriers_database()
+
+def updt_courier():
     print('\n---Update Courier---')
-    lst_indx(list)
+    print_couriers_database()
+    
     entr = input('Enter Courier Index to Update: ')
-    entr = inpt(entr, len(list))
-    ths_dict = {
-        'Name': input('New Courier Name: '),
-        'Phone': int(input('New Courier Phone Number: '))
-        }
+    entr = sql_inpt(entr, 'couriers')
+    name = input('Enter Courier Name: ')
+    number = input('Enter Courier Phone Number: ')
 
-    list[entr] = ths_dict
-    lst_indx(list)
+    if name == '' or number == '':
+        print('One\Two Inputs Empty')
+    else:    
+        cursor = database.connection.cursor()
+        cursor.execute(f"UPDATE couriers SET name = '{name}', number = '{number}' WHERE id = '{int(entr)}'")
+        database.connection.commit()
 
-def dlt_courier(list):
-    print('\n---Delte Courier---')
-    lst_indx(list)
+    print('')
+    print_couriers_database()
+
+def dlt_courier():
+    print('\n---Delete Courier---')
+    print_couriers_database()
+    
     entr = input('Enter Courier Index to Delete: ')
-    entr = inpt(entr, len(list))
-    del list[int(entr)]
+    entr = sql_inpt(entr, 'couriers')
+    cursor = database.connection.cursor()
+    cursor.execute(f"DELETE FROM couriers WHERE id = '{int(entr)}'")
+    database.connection.commit()
 
-    lst_indx(list)
+    print('')
+    print_couriers_database()
 
 #New Order Directory
-def new_order(list1, list2):
+def new_order(list1):
     print('\n---New Order Information---')
     ths_dict = {
         "customer_name": input('Name: '),
-        "customer_address": {
-            'home_number': input('House/Flat Number: '),
-            'street_name': input('Street Name: '),
-            'town': input('Town: '),
-            'postcode': input('Postcode: '),
-        },
+        "customer_address": [input('House/Flat Number: '),input('Street Name: '),input('Town: '),input('Postcode: ')],
         "customer_phone": input('Phone Number: '),
         "customer_order": input('Order Index: '),
-        "courier": list2.index(list2[randint(0,(len(list2)-1))]),
+        "courier": input('Courier Index: '),
         "status": "Preparing"}
 
     list1.append(ths_dict)
@@ -206,11 +227,11 @@ def updt_order(list):
         lst_indx(list)
         entr = input('Enter Order Index to Update: ')
         entr = inpt(entr, len(list))
-        list[(int(entr))]['customer_name'] = input('NewName: ')
-        list[(int(entr))]['customer_address']['home_number'] = input('New House/Flat Number: ')
-        list[(int(entr))]['customer_address']['street_name'] = input('New Street Name: ')
-        list[(int(entr))]['customer_address']['town'] = input('New Town: ')
-        list[(int(entr))]['customer_address']['postcode'] = input('New Postcode: ')
+        list[(int(entr))]['customer_name'] = input('New Name: ')
+        list[(int(entr))]['customer_address'][0] = input('New House/Flat Number: ')
+        list[(int(entr))]['customer_address'][1] = input('New Street Name: ')
+        list[(int(entr))]['customer_address'][2] = input('New Town: ')
+        list[(int(entr))]['customer_address'][3] = input('New Postcode: ')
         list[(int(entr))]['customer_phone'] = input('New Phone Number: ')
         list[(int(entr))]["customer_order"]: input('Order Index: ')
 
