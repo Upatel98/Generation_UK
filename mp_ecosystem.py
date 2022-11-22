@@ -1,7 +1,6 @@
+import os
 import csv
-from random import randint
 import mysql_database.mini_project_database as database
-
 
 #Reading CSV Files
 def read_orders_csv(list):
@@ -57,13 +56,13 @@ def inpt(entr, x):
             break
     return int(entr) 
 
+#SQL Input Loop
 def sql_inpt(entr, table):
-    cursor = database.connection.cursor()
-    cursor.execute(f'SELECT COUNT(id) FROM {table}')
-    x = cursor.fetchall()[0][0]
     while True:
+        cursor = database.connection.cursor()
+        cursor.execute(f'SELECT id FROM {table}')
         try:
-            if int(entr) not in list(range(1, (x+1))):
+            if int(entr) not in [x[0] for x in cursor.fetchall()]:
                 print('Invalid Index')
                 entr = input('Enter Index: ')
                 continue
@@ -76,6 +75,9 @@ def sql_inpt(entr, table):
 
     return int(entr)
 
+#Clear Terminal
+def cls_trmnl():
+    os.system('cls')
 
 #New Products Menu
 def print_products_database():
@@ -125,7 +127,7 @@ def dlt_product():
     entr = input('\nEnter Item Index to Delete: ')
     entr = sql_inpt(entr, 'products')
     cursor = database.connection.cursor()
-    cursor.execute(f"DELETE FROM products WHERE id = '{int(entr)}'")
+    cursor.execute(f"DELETE FROM products WHERE id = '{entr}'")
     database.connection.commit()
 
     print('')
@@ -167,7 +169,7 @@ def updt_courier():
         print('One\Two Inputs Empty')
     else:    
         cursor = database.connection.cursor()
-        cursor.execute(f"UPDATE couriers SET name = '{name}', number = '{number}' WHERE id = '{int(entr)}'")
+        cursor.execute(f"UPDATE couriers SET name = '{name}', number = '{number}' WHERE id = '{entr}'")
         database.connection.commit()
 
     print('')
@@ -180,7 +182,7 @@ def dlt_courier():
     entr = input('Enter Courier Index to Delete: ')
     entr = sql_inpt(entr, 'couriers')
     cursor = database.connection.cursor()
-    cursor.execute(f"DELETE FROM couriers WHERE id = '{int(entr)}'")
+    cursor.execute(f"DELETE FROM couriers WHERE id = '{entr}'")
     database.connection.commit()
 
     print('')
@@ -210,13 +212,13 @@ def updt_order_status(list):
         updte_status = input('Enter Index to Update Order Status: ')
         updte_status = inpt(updte_status, 5)
         if updte_status == 1:
-            (list[int(entr)]).update({"status": "Preparing"})
+            (list[entr]).update({"status": "Preparing"})
         elif updte_status == 2:
-            (list[int(entr)]).update({"status": "Awaiting Pickup"})
+            (list[entr]).update({"status": "Awaiting Pickup"})
         elif updte_status == 3:
-            (list[int(entr)]).update({"status": "Out-for-Delivery"})
+            (list[entr]).update({"status": "Out-for-Delivery"})
         elif updte_status == 4:
-            (list[int(entr)]).update({"status": "Delivered"})
+            (list[entr]).update({"status": "Delivered"})
         lst_indx(list)
     else:
         print('No Orders')
@@ -227,13 +229,13 @@ def updt_order(list):
         lst_indx(list)
         entr = input('Enter Order Index to Update: ')
         entr = inpt(entr, len(list))
-        list[(int(entr))]['customer_name'] = input('New Name: ')
-        list[(int(entr))]['customer_address'][0] = input('New House/Flat Number: ')
-        list[(int(entr))]['customer_address'][1] = input('New Street Name: ')
-        list[(int(entr))]['customer_address'][2] = input('New Town: ')
-        list[(int(entr))]['customer_address'][3] = input('New Postcode: ')
-        list[(int(entr))]['customer_phone'] = input('New Phone Number: ')
-        list[(int(entr))]["customer_order"]: input('Order Index: ')
+        list[entr]['customer_name'] = input('New Name: ')
+        list[entr]['customer_address'][0] = input('New House/Flat Number: ')
+        list[entr]['customer_address'][1] = input('New Street Name: ')
+        list[entr]['customer_address'][2] = input('New Town: ')
+        list[entr]['customer_address'][3] = input('New Postcode: ')
+        list[entr]['customer_phone'] = input('New Phone Number: ')
+        list[entr]["customer_order"]: input('Order Index: ')
 
         lst_indx(list)
     else:
