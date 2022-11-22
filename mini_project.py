@@ -3,7 +3,7 @@
 from mp_ecosystem import read_products_csv, read_couriers_csv, read_orders_csv
 from mp_ecosystem import write_products_csv, write_couriers_csv, write_orders_csv
 from mp_ecosystem import inpt, lst_indx
-from mp_ecosystem import add_product, updte_product, dlt_product 
+from mp_ecosystem import add_product, updt_product, dlt_product 
 from mp_ecosystem import add_courier, updt_courier, dlt_courier
 from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
 
@@ -48,7 +48,7 @@ while True:
         add_product(products)
       
       elif entr == 3:
-        updte_product(products)
+        updt_product(products)
 
       elif entr == 4:
         dlt_product(products)
