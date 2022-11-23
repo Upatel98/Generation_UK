@@ -25,9 +25,11 @@ Application Requirements:
 
 Project Design:
 The whole projects workout load was split into weekly goals in order to focus on each area of the applications code. Each of the applications individuals’ menus were  
-focused on initially with their respective functions. During each week the code was reviewed and any possible improvements where made. 
+focused on initially with their respective functions. During each week the code was reviewed and any possible improvements where made.
 
-The structure of the code was examined first, as it contains multiple while loops and if statements performing different operations, to another coder it would be hard 
+The code utilises basic python coding language practices contaiing while loops, if statements, for loops, print statements, inputs, functions and lists. Each menu was created indiviudally, putting each one into an while loop contaiing an if-else statement performing different functions.  
+
+The structure of the code was examined, as it contains multiple while loops and if statements performing different operations, to another coder it would be hard 
 to understand/examine due to the code being bulky. Therefore two files were made, the initial file to run the application and a second file to act as an ecosystem 
 containing multiple functions to perform operations depending on the if statement. The initial code is more easily read, with anyone able to read and understand what
 each if statement code executes and the functions in the ecosystem file can be examined and debugged if necessary. 
@@ -79,6 +81,9 @@ def close_database():
     print('Couriers Database Uploaded')
 
 Guarantee Project Requirements:
+- Each week I would run the code using the terminal trying differnet methods and see if there was any gaps in the code and makinh sure every function worked.
+- Using simple try - catch blocks to ensure the code executes properly. 
+- Using unit testing. 
 
 Improvements:
 - Currently the projects file structure is not organised and unstructured. Inside the directory there are multiple other files from other projects, there is a virtual 
@@ -86,3 +91,8 @@ Improvements:
 - Streamline the applications code by removing/combining lines of code to maximise python performance.
 - Use more advance python programming skills like object orientation programming techniques. 
 - Improve the visuals of the User Interface in the Command Line. 
+
+Enjoy Implementing:
+- Enjoy challengiing myself using basic python skills and putting each skill together. 
+- Using new skills I learnt in the course like CSV and ecosystem. 
+- Learning how a localHost SQL databse works. 
