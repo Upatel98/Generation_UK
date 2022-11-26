@@ -1,26 +1,20 @@
 #Mini-Project
 
-from mp_ecosystem import read_orders_csv
-from mp_ecosystem import write_orders_csv, close_database
-from mp_ecosystem import inpt, lst_indx, cls_trmnl
+from mp_ecosystem import inpt, clr_trmnl, close_database
 from mp_ecosystem import print_products_database, add_product, updt_product, dlt_product
 from mp_ecosystem import print_couriers_database, add_courier, updt_courier, dlt_courier
-from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
-
-orders = []
-read_orders_csv(orders)
+from mp_ecosystem import print_orders_database, new_order, updt_order_status, updt_order, dlt_order
 
 while True:
   print('\n---Welcome---\n[Index 0] ==> Exit App\n[Index 1] ==> Products Menu\n[Index 2] ==> Couriers Menu\n[Index 3] ==> Orders Menu')
 
   entr = input('Enter Index: ')
   entr = inpt(entr, 4)
-  cls_trmnl()
+  clr_trmnl()
 
   if entr == 0:
 
     close_database()
-    write_orders_csv(orders)
     print('Exit, Thank You')
     break
 
@@ -31,7 +25,7 @@ while True:
       entr = inpt(entr, 6)
 
       if entr == 0:
-        cls_trmnl()
+        clr_trmnl()
         break
 
       elif entr == 1:
@@ -54,7 +48,7 @@ while True:
       entr = inpt(entr, 5)
     
       if entr == 0:
-        cls_trmnl()
+        clr_trmnl()
         break
 
       elif entr == 1:
@@ -77,20 +71,20 @@ while True:
       entr = inpt(entr, 6)
 
       if entr == 0:
-        cls_trmnl()
+        clr_trmnl()
         break
 
       elif entr == 1:
-        (print('\nOrders'), lst_indx(orders)) if orders else print('\nNo Orders')
+        print_orders_database()
 
       elif entr == 2:
-        new_order(orders)
+        new_order()
       
       elif entr == 3:
-        updt_order_status(orders)
+        updt_order_status()
       
       elif entr == 4:
-        updt_order(orders)
+        updt_order()
       
       elif entr == 5:
-        dlt_order(orders)
+        dlt_order()
