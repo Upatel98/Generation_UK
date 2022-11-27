@@ -1,10 +1,10 @@
 #Mini-Project
 
 from mp_ecosystem import close_database
-from mp_ecosystem import inpt, clr_trmnl
-from mp_ecosystem import print_products_database, add_product, updt_product, dlt_product
-from mp_ecosystem import print_couriers_database, add_courier, updt_courier, dlt_courier
-from mp_ecosystem import print_orders_database, new_order, updt_order_status, updt_order, dlt_order
+from mp_ecosystem import inpt, clr_trmnl, print_database
+from mp_ecosystem import add_product, updt_product, dlt_product
+from mp_ecosystem import add_courier, updt_courier, dlt_courier
+from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
 
 while True:
   print('\n---Welcome---\n[Index 0] ==> Exit App\n[Index 1] ==> Products Menu\n[Index 2] ==> Couriers Menu\n[Index 3] ==> Orders Menu')
@@ -31,7 +31,7 @@ while True:
 
       elif entr == 1:
         print('\n---Product List---')
-        print_products_database()
+        print_database('products')
 
       elif entr == 2:
         add_product()
@@ -54,7 +54,7 @@ while True:
 
       elif entr == 1:
         print('\n---Courier List---')
-        print_couriers_database()
+        print_database('couriers')
 
       elif entr == 2:
         add_courier()
@@ -77,7 +77,7 @@ while True:
 
       elif entr == 1:
         print('\n---Order Directory---')
-        print_orders_database()
+        print_database('orders')
 
       elif entr == 2:
         new_order()

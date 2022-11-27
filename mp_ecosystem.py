@@ -16,6 +16,13 @@ def isfloat(num):
         return True
     except ValueError:
         return False
+    
+#Table Count 
+def count(table):
+    cursor = database.connection.cursor()
+    cursor.execute(f"SELECT COUNT(id) FROM {table}")
+    x = cursor.fetchall()[0][0]
+    return x 
 
 #Input Loop
 def inpt(entr, x):
@@ -55,15 +62,35 @@ def sql_inpt(entr, table):
 #Clear Terminal
 clr_trmnl = lambda: os.system('cls')
 
-#New Products Menu
-def print_products_database():
-   
-    cursor = database.connection.cursor()
-    cursor.execute('SELECT id, name, price FROM products')
-   
-    rows = cursor.fetchall()
-    for row in rows:
-        print(f'[Index {row[0]}] ==> [Name: {row[1]} , Price: {row[2]}]')
+#Print Database
+def print_database(table):
+
+    if table == 'products':
+        if count('products') > 0:
+            cursor = database.connection.cursor()
+            cursor.execute('SELECT id, name, price FROM products')
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f'[Index {row[0]}] ==> [Name: {row[1]} , Price: {row[2]}]')
+        else: print('Table is Empty - Unable to Print')   
+    
+    elif table == 'couriers':
+        if count('couriers') > 0:
+            cursor = database.connection.cursor()
+            cursor.execute('SELECT id, name, number FROM couriers')
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f'[Index {(row[0])}] ==> [Name: {row[1]} , Number: {row[2]}]')
+        else: print('Table is Empty - Unable to Print')
+
+    elif table == 'orders':
+        if count('orders') > 0:
+            cursor = database.connection.cursor()
+            cursor.execute('SELECT id, customer_name, customer_address, customer_number, customers_order, courier, status FROM orders')
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f'[Index {row[0]}] :--\nName: {row[1]}\nAddress: {row[2]}\nPhone Number: {row[3]}\nOrder: {row[4]}\nCourier: {row[5]}\nStatus: {row[6]}\n')
+        else: print('Table is Empty - Unable to Print')
 
 def add_product():
     print('\n---Add New Item---')
@@ -82,59 +109,58 @@ def add_product():
     database.connection.commit()
 
     print('')
-    print_products_database()
+    print_database('products')
 
 def updt_product():
-    print('\n---Update Item---')
-    print_products_database()
-    
-    entr = input('Enter Item Index to Update: ')
-    entr = sql_inpt(entr, 'products')
+    if count('products') > 0:
+            
+        print('\n---Update Item---')
+        print_database('products')
+        
+        entr = input('Enter Item Index to Update: ')
+        entr = sql_inpt(entr, 'products')
 
-    new_name = input('\nEnter New Name: ')
-    new_price = input('Enter New Price: ')
-    
-    if new_name == '' or new_price == '':
-        print('One\Both Inputs Empty - No Update')
-    else:
-        while True:
-            if isfloat(new_price) == True:
-                cursor = database.connection.cursor()
-                cursor.execute(f"UPDATE products SET name='{new_name}', price='{new_price}' WHERE id='{entr}'")
-                database.connection.commit()
-                break
-            else:
-                print('Invalid Price Value')
-                new_price = input('Enter Price: ')
-                continue
+        new_name = input('\nEnter New Name: ')
+        new_price = input('Enter New Price: ')
+        
+        if new_name == '' or new_price == '':
+            print('One\Both Inputs Empty - No Update')
+        else:
+            while True:
+                if isfloat(new_price) == True:
+                    cursor = database.connection.cursor()
+                    cursor.execute(f"UPDATE products SET name='{new_name}', price='{new_price}' WHERE id='{entr}'")
+                    database.connection.commit()
+                    break
+                else:
+                    print('Invalid Price Value')
+                    new_price = input('Enter Price: ')
+                    continue
 
-    print('')
-    print_products_database()
+        print('')
+        print_database('products')
+    
+    else: print('Table is Empty - Unable to Update')
 
 def dlt_product():
-    print('\n---Delete Item---')
-    print_products_database()
+    if count('products') > 0:
+            
+        print('\n---Delete Item---')
+        print_database('products')
 
-    entr = input('\nEnter Item Index to Delete: ')
-    entr = sql_inpt(entr, 'products')
+        entr = input('\nEnter Item Index to Delete: ')
+        entr = sql_inpt(entr, 'products')
 
-    cursor = database.connection.cursor()
-    cursor.execute(f"DELETE FROM products WHERE id = '{entr}'")
-    database.connection.commit()
+        cursor = database.connection.cursor()
+        cursor.execute(f"DELETE FROM products WHERE id = '{entr}'")
+        database.connection.commit()
 
-    print('')
-    print_products_database()
+        print('')
+        print_database('products')
+    
+    else: print('Table is Empty - Unable to Delete')
 
 #New Courier Menu
-def print_couriers_database():
-    
-    cursor = database.connection.cursor()
-    cursor.execute('SELECT id, name, number FROM couriers')
-    
-    rows = cursor.fetchall()
-    for row in rows:
-        print(f'[Index {(row[0])}] ==> [Name: {row[1]} , Number: {row[2]}]')
-
 def add_courier():
     print('\n---Add New Courier---')
     
@@ -152,63 +178,73 @@ def add_courier():
             continue
     
     print('')
-    print_couriers_database()
+    print_database('couriers')
 
 def updt_courier():
-    print('\n---Update Courier---')
-    print_couriers_database()
-    
-    entr = input('\nEnter Courier Index to Update: ')
-    entr = sql_inpt(entr, 'couriers')
+    if count('couriers') > 0:
+        
+        print('\n---Update Courier---')
+        print_database('couriers')
+        
+        entr = input('\nEnter Courier Index to Update: ')
+        entr = sql_inpt(entr, 'couriers')
 
-    new_name = input('\nEnter Courier Name: ')
-    new_number = input('Enter Courier Phone Number: ')
+        new_name = input('\nEnter Courier Name: ')
+        new_number = input('Enter Courier Phone Number: ')
 
-    if new_name == '' or new_number == '':
-        print('One\Both Inputs Empty - No Update')
-    else:
-        while True:
-            if new_number.isdigit() == True and len(new_number) == 11 and new_number[:2] == '07':
-                cursor = database.connection.cursor()
-                cursor.execute(f"UPDATE couriers SET name = '{new_name}', number = '{new_number}' WHERE id = '{entr}'")
-                database.connection.commit()
-                break
-            else:
-                print('Invalid Phone Number - 11 Digit Beginning with 07')
-                new_number = input('Enter Courier Phone Number: ')
-                continue
+        if new_name == '' or new_number == '':
+            print('One\Both Inputs Empty - No Update')
+        else:
+            while True:
+                if new_number.isdigit() == True and len(new_number) == 11 and new_number[:2] == '07':
+                    cursor = database.connection.cursor()
+                    cursor.execute(f"UPDATE couriers SET name = '{new_name}', number = '{new_number}' WHERE id = '{entr}'")
+                    database.connection.commit()
+                    break
+                else:
+                    print('Invalid Phone Number - 11 Digit Beginning with 07')
+                    new_number = input('Enter Courier Phone Number: ')
+                    continue
 
-    print('')
-    print_couriers_database()
+        print('')
+        print_database('couriers')
+        
+    else: print('Table is Empty - Unable to Update')
 
 def dlt_courier():
-    print('\n---Delete Courier---')
-    print_couriers_database()
+    if count('couriers') > 0:
     
-    entr = input('Enter Courier Index to Delete: ')
-    entr = sql_inpt(entr, 'couriers')
+        print('\n---Delete Courier---')
+        print_database('couriers')
+        
+        entr = input('Enter Courier Index to Delete: ')
+        entr = sql_inpt(entr, 'couriers')
 
-    cursor = database.connection.cursor()
-    cursor.execute(f"DELETE FROM couriers WHERE id = '{entr}'")
-    database.connection.commit()
+        cursor = database.connection.cursor()
+        cursor.execute(f"DELETE FROM couriers WHERE id = '{entr}'")
+        database.connection.commit()
 
-    print('')
-    print_couriers_database()
+        print('')
+        print_database('couriers')
 
-#New Order Directory
-def print_orders_database():
-    
-    cursor = database.connection.cursor()
-    cursor.execute('SELECT id, customer_name, customer_address, customer_number, customers_order, courier, status FROM orders')
-    
-    rows = cursor.fetchall()
-    for row in rows:
-        print(f'[Index {row[0]}] :--\nName: {row[1]}\nAddress: {row[2]}\nPhone Number: {row[3]}\nOrder: {row[4]}\nCourier: {row[5]}\nStatus: {row[6]}\n')
+    else: print('Table is Empty - Unable to Delete')
 
+#New Order Menu
 def new_order():
     print('\n---New Order Information---')
  
-    customer_name = input('Name: ')
+    while True:
+        n = 0
+        customer_name = input('Name: ')
+        for x in customer_name:
+            if x.isdigit() == True:
+                n += 1
+                print('No Numerical Values Allowed')
+                continue
+            else:
+                pass
+        if n == 0: break
+    
     customer_address = input('Address: ')
     
     while True:
@@ -220,7 +256,7 @@ def new_order():
             continue
     customer_order = input('Order Index: ')
     print('')
-    print_couriers_database()
+    print_database('couriers')
     courier = input('\nChoose Courier Index: ')
     courier = sql_inpt(courier, 'couriers')
 
@@ -229,72 +265,96 @@ def new_order():
     database.connection.commit()
 
     print('')
-    print_orders_database()
+    print_database('orders')
+
 
 def updt_order_status():
-    print('\n---Update Order Status---')
-    print_orders_database()
+    if count('orders') > 0:
 
-    entr = input('Choose Order Information Index: ')
-    entr = sql_inpt(entr, 'orders')
-    print('\n---Change Order Status---\n[Index 0] ==> Preparing\n[Index 1] ==> Awaiting Pickup\n[Index 2] ==> Out-for-Delivery\n[Index 3] ==> Delivered')
-    updte_status = input('Enter Index to Update Order Status: ')
-    updte_status = inpt(updte_status, 4)
+        print('\n---Update Order Status---')
+        print_database('orders')
 
-    cursor = database.connection.cursor()
+        entr = input('Choose Order Information Index: ')
+        entr = sql_inpt(entr, 'orders')
+        print('\n---Change Order Status---\n[Index 0] ==> Preparing\n[Index 1] ==> Awaiting Pickup\n[Index 2] ==> Out-for-Delivery\n[Index 3] ==> Delivered')
+        updte_status = input('Enter Index to Update Order Status: ')
+        updte_status = inpt(updte_status, 4)
 
-    if updte_status == 0:
-        cursor.execute(f"UPDATE orders SET status = 'Preparing' WHERE id = '{entr}'")
-    elif updte_status == 1:
-        cursor.execute(f"UPDATE orders SET status = 'Awaiting Pickup' WHERE id = '{entr}'")
-    elif updte_status == 2:
-        cursor.execute(f"UPDATE orders SET status = 'Out-for-Delivery' WHERE id = '{entr}'")
-    elif updte_status == 3:
-        cursor.execute(f"UPDATE orders SET status = 'Delivered' WHERE id = '{entr}'")
+        cursor = database.connection.cursor()
 
-    database.connection.commit()
-    print('')
-    print_orders_database()
+        if updte_status == 0:
+            cursor.execute(f"UPDATE orders SET status = 'Preparing' WHERE id = '{entr}'")
+        elif updte_status == 1:
+            cursor.execute(f"UPDATE orders SET status = 'Awaiting Pickup' WHERE id = '{entr}'")
+        elif updte_status == 2:
+            cursor.execute(f"UPDATE orders SET status = 'Out-for-Delivery' WHERE id = '{entr}'")
+        elif updte_status == 3:
+            cursor.execute(f"UPDATE orders SET status = 'Delivered' WHERE id = '{entr}'")
+
+        database.connection.commit()
+        print('')
+        print_database('orders')
+    
+    else: print('Table is Empty - Unable to Update')
 
 def updt_order():
-    print('\n---Update Order Information---')
-    print_orders_database()
+    if count('orders') > 0:
 
-    entr = input('Enter Order Index to Update: ')
-    entr = sql_inpt(entr, 'orders')
+        print('\n---Update Order Information---')
+        print_database('orders')
 
-    customer_name = input('Name: ')
-    customer_address = input('Address: ')
-    while True:
-        customer_number = input('Phone Number: ')
-        if customer_number.isdigit() == True and len(customer_number) == 11 and customer_number[:2] == '07':
-            break
-        else:
-            print('Invalid Phone Number - 11 Digit Beginning with 07')
-            continue
-    customer_order = input('Order Index: ')
-    print('')
-    print_couriers_database()
-    courier = input('\nChoose Courier Index: ')
-    courier = sql_inpt(courier, 'couriers')
+        entr = input('Enter Order Index to Update: ')
+        entr = sql_inpt(entr, 'orders')
 
-    cursor = database.connection.cursor()
-    cursor.execute(f"UPDATE orders SET customer_name = '{customer_name}', customer_address = '{customer_address}', customer_number = '{customer_number}', customers_order = '{customer_order}', courier = '{courier}' WHERE id = '{entr}'")
-    database.connection.commit()
+        while True:
+            n = 0
+            customer_name = input('Name: ')
+            for x in customer_name:
+                if x.isdigit() == True:
+                    n += 1
+                    print('No Numerical Values Allowed')
+                    continue
+                else:
+                    pass
+            if n == 0: break
+        
+        customer_address = input('Address: ')
+        while True:
+            customer_number = input('Phone Number: ')
+            if customer_number.isdigit() == True and len(customer_number) == 11 and customer_number[:2] == '07':
+                break
+            else:
+                print('Invalid Phone Number - 11 Digit Beginning with 07')
+                continue
+        customer_order = input('Order Index: ')
+        print('')
+        print_database('couriers')
+        courier = input('\nChoose Courier Index: ')
+        courier = sql_inpt(courier, 'couriers')
 
-    print('')
-    print_orders_database()
+        cursor = database.connection.cursor()
+        cursor.execute(f"UPDATE orders SET customer_name = '{customer_name}', customer_address = '{customer_address}', customer_number = '{customer_number}', customers_order = '{customer_order}', courier = '{courier}' WHERE id = '{entr}'")
+        database.connection.commit()
+
+        print('')
+        print_database('orders')
+        
+    else: print('Table is Empty - Unable to Update ')
 
 def dlt_order():
-    print('\n---Delte Order---')
-    print_orders_database()
+    if count('orders') > 0:
         
-    entr = input('Enter Order Index to Delete: ')
-    entr = sql_inpt(entr, 'orders')
+        print('\n---Delte Order---')
+        print_database('orders')
+            
+        entr = input('Enter Order Index to Delete: ')
+        entr = sql_inpt(entr, 'orders')
 
-    cursor = database.connection.cursor()
-    cursor.execute(f"DELETE FROM orders WHERE id = '{entr}'")
-    database.connection.commit()
+        cursor = database.connection.cursor()
+        cursor.execute(f"DELETE FROM orders WHERE id = '{entr}'")
+        database.connection.commit()
 
-    print('')
-    print_orders_database()
+        print('')
+        print_database('orders')
+            
+    else: print('Table is Empty - Unable to Delete')
