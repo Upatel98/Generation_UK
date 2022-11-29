@@ -92,6 +92,7 @@ def print_database(table):
                 print(f'[Index {row[0]}] :--\nName: {row[1]}\nAddress: {row[2]}\nPhone Number: {row[3]}\nOrder: {row[4]}\nCourier: {row[5]}\nStatus: {row[6]}\n')
         else: print('Table is Empty - Unable to Print')
 
+#Product Menu
 def add_product():
     print('\n---Add New Item---')
     
@@ -160,7 +161,7 @@ def dlt_product():
     
     else: print('Table is Empty - Unable to Delete')
 
-#New Courier Menu
+#Courier Menu
 def add_courier():
     print('\n---Add New Courier---')
     
@@ -229,7 +230,7 @@ def dlt_courier():
 
     else: print('Table is Empty - Unable to Delete')
 
-#New Order Menu
+#Order Menu
 def new_order():
     print('\n---New Order Information---')
  
