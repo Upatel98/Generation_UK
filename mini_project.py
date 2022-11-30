@@ -1,6 +1,6 @@
 #Mini-Project
 
-from mp_ecosystem import print_database, close_database, inpt, clr_trmnl
+from mp_ecosystem import prnt_database, cls_database, inpt, clr_trmnl
 from mp_ecosystem import products, couriers, orders
 
 while True:
@@ -12,7 +12,7 @@ while True:
 
   if entr == 0:
 
-    close_database()
+    cls_database()
     print('Exit, Thank You')
     break
 
@@ -28,16 +28,16 @@ while True:
 
       elif entr == 1:
         print('\n---Product List---')
-        print_database('products')
+        prnt_database('products')
 
       elif entr == 2:
-        products.add_product()
+        products.add()
       
       elif entr == 3:
-        products.updt_product()
+        products.updt()
 
       elif entr == 4:
-        products.dlt_product()
+        products.dlt()
 
   elif entr == 2: 
     while True: 
@@ -51,20 +51,20 @@ while True:
 
       elif entr == 1:
         print('\n---Courier List---')
-        print_database('couriers')
+        prnt_database('couriers')
 
       elif entr == 2:
-        couriers.add_courier()
+        couriers.add()
 
       elif entr == 3:
-        couriers.updt_courier()
+        couriers.updt()
         
       elif entr == 4:
-        couriers.dlt_courier() 
+        couriers.dlt() 
 
   elif entr == 3:
     while True: 
-      print('\n---Orders Menu---\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Orders Directory\n[Index 2] ==> Add Customer Information\n[Index 3] ==> Update Order Status\n[Index 4] ==> Update Customer Info\n[Index 5] ==> Delete Customer Information')
+      print('\n---Orders Menu---\n[Index 0] ==> Return to Main Menu\n[Index 1] ==> Orders Directory\n[Index 2] ==> Add Customer Information\n[Index 3] ==> Update Order Status\n[Index 4] ==> Update Customer Information\n[Index 5] ==> Delete Customer Information')
       entr = input('Enter Index: ')
       entr = inpt(entr, 6)
 
@@ -74,16 +74,16 @@ while True:
 
       elif entr == 1:
         print('\n---Order Directory---')
-        print_database('orders')
+        prnt_database('orders')
 
       elif entr == 2:
-        orders.new_order()
+        orders.add()
       
       elif entr == 3:
-        orders.updt_order_status()
+        orders.updt_status()
       
       elif entr == 4:
-        orders.updt_order()
+        orders.updt_info()
       
       elif entr == 5:
-        orders.dlt_order()
+        orders.dlt()

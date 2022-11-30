@@ -2,7 +2,7 @@ import os
 import mysql_database.mini_project_database as database
 
 #Closing Database
-def close_database():
+def cls_database():
     cursor = database.connection.cursor()
     cursor.close()
     database.connection.close()
@@ -10,6 +10,7 @@ def close_database():
     print('Couriers Database Uploaded')
     print('Orders Database Uploaded')
 
+#isfloat
 def isfloat(num):
     try:
         float(num)
@@ -17,7 +18,7 @@ def isfloat(num):
     except ValueError:
         return False
     
-#Table Count 
+#Table Count
 def count(table):
     cursor = database.connection.cursor()
     cursor.execute(f"SELECT COUNT(id) FROM {table}")
@@ -63,7 +64,7 @@ def sql_inpt(entr, table):
 clr_trmnl = lambda: os.system('cls')
 
 #Print Database
-def print_database(table):
+def prnt_database(table):
 
     if table == 'products':
         if count('products') > 0:
@@ -92,12 +93,12 @@ def print_database(table):
                 print(f'[Index {row[0]}]:\n[Name: {row[1]}, Address: {row[2]}, Phone Number: {row[3]}, Order: {row[4]}, Courier: {row[5]}, Status: {row[6]}]\n')
         else: print('Table is Empty - Unable to Print')
 
+#Product Class
 class products:
     def __init__(self):
         pass
 
-    #Product Menu
-    def add_product():
+    def add():
         print('\n---Add New Item---')
         
         name =  input('\nEnter Name: ')
@@ -114,13 +115,13 @@ class products:
         database.connection.commit()
 
         print('')
-        print_database('products')
+        prnt_database('products')
 
-    def updt_product():
+    def updt():
         if count('products') > 0:
                 
             print('\n---Update Item---')
-            print_database('products')
+            prnt_database('products')
             
             entr = input('Enter Item Index to Update: ')
             entr = sql_inpt(entr, 'products')
@@ -143,15 +144,15 @@ class products:
                         continue
 
             print('')
-            print_database('products')
+            prnt_database('products')
         
         else: print('Table is Empty - Unable to Update')
 
-    def dlt_product():
+    def dlt():
         if count('products') > 0:
                 
             print('\n---Delete Item---')
-            print_database('products')
+            prnt_database('products')
 
             entr = input('\nEnter Item Index to Delete: ')
             entr = sql_inpt(entr, 'products')
@@ -161,16 +162,16 @@ class products:
             database.connection.commit()
 
             print('')
-            print_database('products')
+            prnt_database('products')
         
         else: print('Table is Empty - Unable to Delete')
 
-#Courier Menu
+#Courier Class
 class couriers:
     def __init__(self):
         pass
         
-    def add_courier():
+    def add():
         print('\n---Add New Courier---')
         
         name = input('Enter Courier Name: ')
@@ -187,13 +188,13 @@ class couriers:
                 continue
         
         print('')
-        print_database('couriers')
+        prnt_database('couriers')
 
-    def updt_courier():
+    def updt():
         if count('couriers') > 0:
             
             print('\n---Update Courier---')
-            print_database('couriers')
+            prnt_database('couriers')
             
             entr = input('\nEnter Courier Index to Update: ')
             entr = sql_inpt(entr, 'couriers')
@@ -216,15 +217,15 @@ class couriers:
                         continue
 
             print('')
-            print_database('couriers')
+            prnt_database('couriers')
             
         else: print('Table is Empty - Unable to Update')
 
-    def dlt_courier():
+    def dlt():
         if count('couriers') > 0:
         
             print('\n---Delete Courier---')
-            print_database('couriers')
+            prnt_database('couriers')
             
             entr = input('Enter Courier Index to Delete: ')
             entr = sql_inpt(entr, 'couriers')
@@ -234,16 +235,16 @@ class couriers:
             database.connection.commit()
 
             print('')
-            print_database('couriers')
+            prnt_database('couriers')
 
         else: print('Table is Empty - Unable to Delete')
 
-#Order Menu
+#Order Class
 class orders:
     def __init__(self):
         pass
         
-    def new_order():
+    def add():
         print('\n---New Order Information---')
     
         while True:
@@ -269,7 +270,7 @@ class orders:
                 continue
         customer_order = input('Order Index: ')
         print('')
-        print_database('couriers')
+        prnt_database('couriers')
         courier = input('\nChoose Courier Index: ')
         courier = sql_inpt(courier, 'couriers')
 
@@ -278,13 +279,13 @@ class orders:
         database.connection.commit()
 
         print('')
-        print_database('orders')
+        prnt_database('orders')
 
-    def updt_order_status():
+    def updt_status():
         if count('orders') > 0:
 
             print('\n---Update Order Status---')
-            print_database('orders')
+            prnt_database('orders')
 
             entr = input('Choose Order Information Index: ')
             entr = sql_inpt(entr, 'orders')
@@ -305,15 +306,15 @@ class orders:
 
             database.connection.commit()
             print('')
-            print_database('orders')
+            prnt_database('orders')
         
         else: print('Table is Empty - Unable to Update')
 
-    def updt_order():
+    def updt_info():
         if count('orders') > 0:
 
             print('\n---Update Order Information---')
-            print_database('orders')
+            prnt_database('orders')
 
             entr = input('Enter Order Index to Update: ')
             entr = sql_inpt(entr, 'orders')
@@ -340,7 +341,7 @@ class orders:
                     continue
             customer_order = input('Order Index: ')
             print('')
-            print_database('couriers')
+            prnt_database('couriers')
             courier = input('\nChoose Courier Index: ')
             courier = sql_inpt(courier, 'couriers')
 
@@ -349,15 +350,15 @@ class orders:
             database.connection.commit()
 
             print('')
-            print_database('orders')
+            prnt_database('orders')
             
         else: print('Table is Empty - Unable to Update ')
 
-    def dlt_order():
+    def dlt():
         if count('orders') > 0:
             
             print('\n---Delte Order---')
-            print_database('orders')
+            prnt_database('orders')
                 
             entr = input('Enter Order Index to Delete: ')
             entr = sql_inpt(entr, 'orders')
@@ -367,6 +368,6 @@ class orders:
             database.connection.commit()
 
             print('')
-            print_database('orders')
+            prnt_database('orders')
                 
         else: print('Table is Empty - Unable to Delete')
