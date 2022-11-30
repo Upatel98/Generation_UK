@@ -1,10 +1,7 @@
 #Mini-Project
 
-from mp_ecosystem import close_database
-from mp_ecosystem import inpt, clr_trmnl, print_database
-from mp_ecosystem import add_product, updt_product, dlt_product
-from mp_ecosystem import add_courier, updt_courier, dlt_courier
-from mp_ecosystem import new_order, updt_order_status, updt_order, dlt_order
+from mp_ecosystem import print_database, close_database, inpt, clr_trmnl
+from mp_ecosystem import products, couriers, orders
 
 while True:
   print('\n---Welcome---\n[Index 0] ==> Exit App\n[Index 1] ==> Products Menu\n[Index 2] ==> Couriers Menu\n[Index 3] ==> Orders Menu')
@@ -34,13 +31,13 @@ while True:
         print_database('products')
 
       elif entr == 2:
-        add_product()
+        products.add_product()
       
       elif entr == 3:
-        updt_product()
+        products.updt_product()
 
       elif entr == 4:
-        dlt_product()
+        products.dlt_product()
 
   elif entr == 2: 
     while True: 
@@ -57,13 +54,13 @@ while True:
         print_database('couriers')
 
       elif entr == 2:
-        add_courier()
+        couriers.add_courier()
 
       elif entr == 3:
-        updt_courier()
+        couriers.updt_courier()
         
       elif entr == 4:
-        dlt_courier() 
+        couriers.dlt_courier() 
 
   elif entr == 3:
     while True: 
@@ -80,13 +77,13 @@ while True:
         print_database('orders')
 
       elif entr == 2:
-        new_order()
+        orders.new_order()
       
       elif entr == 3:
-        updt_order_status()
+        orders.updt_order_status()
       
       elif entr == 4:
-        updt_order()
+        orders.updt_order()
       
       elif entr == 5:
-        dlt_order()
+        orders.dlt_order()
