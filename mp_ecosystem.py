@@ -1,14 +1,8 @@
 import os
 import mysql_database.mini_project_database as database
 
-#Closing Database
-def cls_database():
-    cursor = database.connection.cursor()
-    cursor.close()
-    database.connection.close()
-    print('\nProducts Database Uploaded')
-    print('Couriers Database Uploaded')
-    print('Orders Database Uploaded')
+#Clear Terminal
+clr_trmnl = lambda: os.system('cls')
 
 #isfloat
 def isfloat(num):
@@ -17,13 +11,6 @@ def isfloat(num):
         return True
     except ValueError:
         return False
-    
-#Table Count
-def count(table):
-    cursor = database.connection.cursor()
-    cursor.execute(f"SELECT COUNT(id) FROM {table}")
-    x = cursor.fetchall()[0][0]
-    return x 
 
 #Input Loop
 def inpt(entr, x):
@@ -40,28 +27,6 @@ def inpt(entr, x):
         else:
             break
     return int(entr) 
-
-#SQL Input Loop
-def sql_inpt(entr, table):
-    while True:
-        cursor = database.connection.cursor()
-        cursor.execute(f'SELECT id FROM {table}')
-        try:
-            if int(entr) not in [x[0] for x in cursor.fetchall()]:
-                print('Invalid Index')
-                entr = input('Re-Enter Index: ')
-                continue
-        except ValueError:
-            print('Invalid Index')
-            entr = input('Re-Enter Index: ')
-            continue
-        else:
-            break
-
-    return int(entr)
-
-#Clear Terminal
-clr_trmnl = lambda: os.system('cls')
 
 #Print Database
 def prnt_database(table):
@@ -92,6 +57,41 @@ def prnt_database(table):
             for row in rows:
                 print(f'[Index {row[0]}]:\n[Name: {row[1]}, Address: {row[2]}, Phone Number: {row[3]}, Order: {row[4]}, Courier: {row[5]}, Status: {row[6]}]\n')
         else: print('Table is Empty - Unable to Print')
+
+#Table Count
+def count(table):
+    cursor = database.connection.cursor()
+    cursor.execute(f"SELECT COUNT(id) FROM {table}")
+    x = cursor.fetchall()[0][0]
+    return x 
+
+#SQL Input Loop
+def sql_inpt(entr, table):
+    while True:
+        cursor = database.connection.cursor()
+        cursor.execute(f'SELECT id FROM {table}')
+        try:
+            if int(entr) not in [x[0] for x in cursor.fetchall()]:
+                print('Invalid Index')
+                entr = input('Re-Enter Index: ')
+                continue
+        except ValueError:
+            print('Invalid Index')
+            entr = input('Re-Enter Index: ')
+            continue
+        else:
+            break
+
+    return int(entr)
+
+#Closing Database
+def cls_database():
+    cursor = database.connection.cursor()
+    cursor.close()
+    database.connection.close()
+    print('\nProducts Database Uploaded')
+    print('Couriers Database Uploaded')
+    print('Orders Database Uploaded')
 
 #Product Class
 class products:

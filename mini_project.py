@@ -1,4 +1,4 @@
-#Mini-Project
+#Mini-Project - Week 6
 
 from mp_ecosystem import prnt_database, cls_database, inpt, clr_trmnl
 from mp_ecosystem import products, couriers, orders
