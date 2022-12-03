@@ -32,6 +32,7 @@ def inpt(entr, x):
 def prnt_database(table):
 
     if table == 'products':
+        print('\n---Product List---')
         if count('products') > 0:
             cursor = database.connection.cursor()
             cursor.execute('SELECT id, name, price FROM products')
@@ -41,6 +42,7 @@ def prnt_database(table):
         else: print('Table is Empty - Unable to Print')   
     
     elif table == 'couriers':
+        print('\n---Courier List---')
         if count('couriers') > 0:
             cursor = database.connection.cursor()
             cursor.execute('SELECT id, name, number FROM couriers')
@@ -50,6 +52,7 @@ def prnt_database(table):
         else: print('Table is Empty - Unable to Print')
 
     elif table == 'orders':
+        print('\n---Order Directory---')
         if count('orders') > 0:
             cursor = database.connection.cursor()
             cursor.execute('SELECT id, customer_name, customer_address, customer_number, customers_order, courier, status FROM orders')
@@ -143,7 +146,6 @@ class products:
                         new_price = input('Enter Price: ')
                         continue
 
-            print('')
             prnt_database('products')
         
         else: print('Table is Empty - Unable to Update')
@@ -161,7 +163,6 @@ class products:
             cursor.execute(f"DELETE FROM products WHERE id = '{entr}'")
             database.connection.commit()
 
-            print('')
             prnt_database('products')
         
         else: print('Table is Empty - Unable to Delete')
@@ -187,7 +188,6 @@ class couriers:
                 print('Invalid Phone Number - 11 Digit Beginning with 07')
                 continue
         
-        print('')
         prnt_database('couriers')
 
     def updt():
@@ -216,7 +216,6 @@ class couriers:
                         new_number = input('Enter Courier Phone Number: ')
                         continue
 
-            print('')
             prnt_database('couriers')
             
         else: print('Table is Empty - Unable to Update')
@@ -234,7 +233,6 @@ class couriers:
             cursor.execute(f"DELETE FROM couriers WHERE id = '{entr}'")
             database.connection.commit()
 
-            print('')
             prnt_database('couriers')
 
         else: print('Table is Empty - Unable to Delete')
@@ -268,7 +266,9 @@ class orders:
             else:
                 print('Invalid Phone Number - 11 Digit Beginning with 07')
                 continue
-        customer_order = input('Order Index: ')
+        print('')
+        prnt_database('products')
+        customer_order = input('Choose Order List: ')
         print('')
         prnt_database('couriers')
         courier = input('\nChoose Courier Index: ')
@@ -278,7 +278,6 @@ class orders:
         cursor.execute(f"INSERT INTO orders (customer_name, customer_address, customer_number, customers_order, courier, status) VALUES ('{customer_name}', '{customer_address}', '{customer_number}', '{customer_order}', '{courier}', 'Preparing')")
         database.connection.commit()
 
-        print('')
         prnt_database('orders')
 
     def updt_status():
@@ -305,7 +304,7 @@ class orders:
                 cursor.execute(f"UPDATE orders SET status = 'Delivered' WHERE id = '{entr}'")
 
             database.connection.commit()
-            print('')
+
             prnt_database('orders')
         
         else: print('Table is Empty - Unable to Update')
@@ -339,8 +338,9 @@ class orders:
                 else:
                     print('Invalid Phone Number - 11 Digit Beginning with 07')
                     continue
-            customer_order = input('Order Index: ')
-            print('')
+            
+            prnt_database('products')
+            customer_order = input('Choose Order List: ')
             prnt_database('couriers')
             courier = input('\nChoose Courier Index: ')
             courier = sql_inpt(courier, 'couriers')
@@ -349,7 +349,6 @@ class orders:
             cursor.execute(f"UPDATE orders SET customer_name = '{customer_name}', customer_address = '{customer_address}', customer_number = '{customer_number}', customers_order = '{customer_order}', courier = '{courier}' WHERE id = '{entr}'")
             database.connection.commit()
 
-            print('')
             prnt_database('orders')
             
         else: print('Table is Empty - Unable to Update ')
@@ -367,7 +366,6 @@ class orders:
             cursor.execute(f"DELETE FROM orders WHERE id = '{entr}'")
             database.connection.commit()
 
-            print('')
             prnt_database('orders')
                 
         else: print('Table is Empty - Unable to Delete')

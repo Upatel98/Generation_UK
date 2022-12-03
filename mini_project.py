@@ -1,4 +1,4 @@
-#Mini-Project - Week 6
+#Mini-Project
 
 from mp_ecosystem import prnt_database, cls_database, inpt, clr_trmnl
 from mp_ecosystem import products, couriers, orders
@@ -24,7 +24,6 @@ while True:
         break
 
       elif entr == 1:
-        print('\n---Product List---')
         prnt_database('products')
 
       elif entr == 2:
@@ -46,7 +45,6 @@ while True:
         break
 
       elif entr == 1:
-        print('\n---Courier List---')
         prnt_database('couriers')
 
       elif entr == 2:
@@ -68,7 +66,6 @@ while True:
         break
 
       elif entr == 1:
-        print('\n---Order Directory---')
         prnt_database('orders')
 
       elif entr == 2:
