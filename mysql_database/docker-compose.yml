@@ -9,14 +9,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - type: volume
-        source: my_db
-        target: /var/lib/mysql
+      - /Code
   adminer:
     image: adminer
     container_name: adminer_container
     restart: always
     ports:
       - 8080:8080
-volumes:
-  my_db:

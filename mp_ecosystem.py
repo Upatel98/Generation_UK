@@ -342,7 +342,7 @@ class orders:
             prnt_database('products')
             customer_order = input('Choose Order List: ')
             prnt_database('couriers')
-            courier = input('\nChoose Courier Index: ')
+            courier = input('Choose Courier Index: ')
             courier = sql_inpt(courier, 'couriers')
 
             cursor = database.connection.cursor()
